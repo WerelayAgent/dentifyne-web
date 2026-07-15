@@ -25,7 +25,13 @@
     <script>
       const originalFetch = window.fetch;
       window.fetch = async function() {
-        if (arguments[0] && arguments[0].includes && arguments[0].includes('/api/config')) {
+        let url = '';
+        if (typeof arguments[0] === 'string') {
+          url = arguments[0];
+        } else if (arguments[0] && arguments[0].url) {
+          url = arguments[0].url;
+        }
+        if (url && url.includes('/api/')) {
           return new Response(JSON.stringify({}), { status: 200, headers: { 'Content-Type': 'application/json' } });
         }
         return originalFetch.apply(this, arguments);
