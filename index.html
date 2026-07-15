@@ -22,6 +22,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="module" crossorigin="" src="assets/index-BjfyAN4m.js"></script>
     <link rel="stylesheet" crossorigin="" href="assets/index-DJezKYDq.css">
+    <script>
+      const originalFetch = window.fetch;
+      window.fetch = async function() {
+        if (arguments[0] && arguments[0].includes && arguments[0].includes('/api/config')) {
+          return new Response(JSON.stringify({}), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        }
+        return originalFetch.apply(this, arguments);
+      };
+    </script>
   </head>
   <body>
     <div id="root">
